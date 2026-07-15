@@ -1,0 +1,19 @@
+{
+  "type": "module",
+  "name": "gaffermesh-compute",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@qvac/sdk": "^0.15.0",
+    "@tetherto/wdk": "^1.0.0-beta.14",
+    "express": "^5.2.1",
+    "hyperswarm": "^4.17.0"
+  }
+}

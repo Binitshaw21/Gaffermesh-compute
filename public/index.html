@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GafferMesh | Off-Grid Compute</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono&display=swap');
+        body { background-color: #0B0F19; color: #F8FAFC; font-family: 'Inter', sans-serif; overflow: hidden; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .tether-green { color: #009393; }
+        .bg-tether { background-color: #009393; }
+        .bg-tether-hover { background-color: #007a7a; }
+        .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        /* Smooth transitions for the landing page */
+        #landing-page { transition: opacity 0.6s ease-in-out, visibility 0.6s; }
+        .hidden-fade { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased relative">
+
+    <!-- 🚀 THE DESCRIPTIVE LANDING PAGE (Solid Background) -->
+    <div id="landing-page" class="absolute inset-0 z-50 bg-[#0B0F19] overflow-y-auto">
+        <!-- Optional Texture Overlay -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
+        
+        <!-- Hero Section -->
+        <div class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-10 relative z-10">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-teal-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(0,147,147,0.4)]">
+                <i class="fa-solid fa-network-wired text-4xl text-white"></i>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">GAFFER<span class="tether-green">MESH</span></h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto font-light">
+                The Decentralized Compute Market for Football Stadiums.
+            </p>
+            <p class="text-sm md:text-base text-gray-500 mb-10 max-w-2xl mx-auto">
+                When 60,000 fans pack a stadium, cellular networks crash. GafferMesh allows fans to purchase AI tactical analysis completely off-grid by routing requests to local devices in the stands.
+            </p>
+            <button onclick="launchApp()" class="bg-tether hover:bg-tether-hover text-white text-lg font-bold py-4 px-10 rounded-xl transition-all hover:scale-105 shadow-[0_0_20px_rgba(0,147,147,0.4)] flex items-center gap-3 mx-auto">
+                <i class="fa-solid fa-satellite-dish"></i> Launch Stadium Mesh
+            </button>
+        </div>
+
+        <!-- How It Works / The Stack Section -->
+        <div class="py-20 bg-gray-900/50 border-t border-gray-800 relative z-10">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-4">Built on the Tether Tri-Stack</h2>
+                    <p class="text-gray-400">Winning the Developers Cup by utilizing every layer of the decentralized ecosystem.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Pears Feature -->
+                    <div class="glass-panel p-8 rounded-2xl border border-gray-700/50 hover:border-teal-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center mb-6 text-teal-400 text-xl border border-gray-700">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Pears P2P Network</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Zero cloud servers. We use Hyperswarm and Hypercore to create a local device-to-device mesh network directly in the stadium stands, bypassing dead cellular networks entirely.
+                        </p>
+                    </div>
+
+                    <!-- WDK Feature -->
+                    <div class="glass-panel p-8 rounded-2xl border border-gray-700/50 hover:border-green-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center mb-6 text-green-400 text-xl border border-gray-700">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">WDK Agent Wallets</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Fans use self-custodial Tether wallets. Smart agents automatically sign gasless micro-payments of USDt to incentivize users with high-power laptops to provide compute power.
+                        </p>
+                    </div>
+
+                    <!-- QVAC Feature -->
+                    <div class="glass-panel p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-colors">
+                        <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center mb-6 text-blue-400 text-xl border border-gray-700">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">QVAC Local AI</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            All tactical inference runs completely on-device using the QVAC SDK. Football logic is processed locally without sending sensitive fan data or predictions to cloud APIs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 💻 THE APP DASHBOARD (Hidden initially to prevent bleeding) -->
+    <div id="app-container" class="hidden w-full h-full">
+        
+        <!-- Collapsible Sidebar -->
+        <aside id="sidebar" class="w-72 glass-panel border-r border-gray-800 flex flex-col transition-all duration-300 z-40 absolute md:relative h-full transform md:translate-x-0">
+            <div class="p-6 flex justify-between items-center border-b border-gray-800/50">
+                <h1 class="text-xl font-bold tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired tether-green"></i> GAFFER<span class="tether-green">MESH</span>
+                </h1>
+                <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Wallet Widget -->
+            <div class="p-6 border-b border-gray-800/50 bg-gradient-to-br from-gray-900 to-gray-800">
+                <div class="flex justify-between items-center mb-2">
+                    <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold">WDK Self-Custody</p>
+                    <span class="px-2 py-1 rounded text-[10px] bg-green-500/20 text-green-400 border border-green-500/30">Connected</span>
+                </div>
+                <p class="text-xs font-mono text-gray-500 mb-3 truncate" title="0xMobileFan3948B390">0xMobile...B390</p>
+                <div class="flex items-baseline gap-2">
+                    <h2 id="wallet-balance" class="text-3xl font-bold text-white tracking-tight">150.00</h2>
+                    <span class="text-sm text-gray-400 font-medium">USDt</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 mt-4">
+                    <button onclick="mockAddMoney()" class="py-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus tether-green"></i> Top Up
+                    </button>
+                    <button onclick="toggleHistory()" class="py-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-blue-400"></i> History
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-800/50 text-white font-medium border border-gray-700">
+                    <i class="fa-solid fa-message text-gray-400 w-5 text-center"></i> Match Compute
+                </a>
+                <a href="#" onclick="showToast('Coming Soon', 'Predictions market will launch in V2.', 'info')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition-colors font-medium">
+                    <i class="fa-solid fa-chart-line w-5 text-center"></i> My Predictions
+                </a>
+                <a href="#" onclick="showToast('Under Construction', 'Fan Profile editing is disabled during the hackathon demo.', 'info')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition-colors font-medium">
+                    <i class="fa-solid fa-user w-5 text-center"></i> Fan Profile
+                </a>
+                <a href="#" onclick="showToast('Support Ticket', 'Support module is currently offline in this mesh environment.', 'error')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition-colors font-medium">
+                    <i class="fa-solid fa-circle-question w-5 text-center"></i> Help & Support
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-800/50">
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-teal-500 to-blue-500 flex items-center justify-center font-bold">BS</div>
+                    <div>
+                        <p class="text-sm font-semibold">Binit Shaw</p>
+                        <p class="text-xs text-green-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span> Mesh Active</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Interface -->
+        <main class="flex-1 flex flex-col relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-opacity-5">
+            
+            <!-- Top Bar -->
+            <header class="h-16 glass-panel border-b border-gray-800/50 flex items-center justify-between px-6 z-10 w-full">
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-gray-800">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                        <span class="text-sm font-medium text-gray-300">Pears Local Mesh: <span class="text-white font-mono">Found 1 Compute Node</span></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Chat History -->
+            <div id="chat-box" class="flex-1 p-6 md:p-10 overflow-y-auto space-y-6 scroll-smooth">
+                <div class="flex justify-center mb-8">
+                    <div class="px-4 py-1 rounded-full glass-panel text-xs text-gray-400">Encrypted P2P Session Started</div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-6 bg-gradient-to-t from-[#0B0F19] to-transparent">
+                <div class="max-w-4xl mx-auto relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative flex items-end gap-2 bg-gray-900 border border-gray-700 rounded-2xl p-2 shadow-2xl">
+                        <textarea id="prompt-input" rows="1" 
+                            class="flex-1 bg-transparent border-none px-4 py-3 focus:ring-0 text-white placeholder-gray-500 resize-none max-h-32 font-medium focus:outline-none" 
+                            placeholder="Ask the local tactical AI..." oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                        
+                        <button onclick="sendPrompt()" 
+                            class="bg-tether hover:bg-tether-hover text-white rounded-xl px-6 py-3 font-semibold transition-all shadow-lg flex items-center gap-2 flex-shrink-0 h-12 mb-1">
+                            <i class="fa-solid fa-microchip"></i> Pay 0.05 & Analyze
+                        </button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p class="text-[10px] text-gray-500"><i class="fa-solid fa-shield-halved"></i> Transactions are cryptographically signed via WDK and settled via Pears Hyperswarm.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay UI components -->
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="glass-panel border border-gray-700 rounded-2xl w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">WDK Transaction Ledger</h3>
+                <button onclick="toggleHistory()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div id="tx-list" class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                <p class="text-sm text-gray-500 text-center py-4">No transactions yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed top-20 right-6 transform translate-x-full transition-transform duration-300 glass-panel border-l-4 border-tether-green p-4 rounded shadow-2xl z-50 flex items-center gap-3">
+        <i id="toast-icon" class="fa-solid fa-circle-check tether-green text-xl"></i>
+        <div>
+            <p id="toast-title" class="font-bold text-sm">Success</p>
+            <p id="toast-msg" class="text-xs text-gray-300">Action completed.</p>
+        </div>
+    </div>
+
+    <script>
+        // --- UI STATE LOGIC ---
+        function launchApp() {
+            const landing = document.getElementById('landing-page');
+            const app = document.getElementById('app-container');
+            
+            // Trigger fade out
+            landing.classList.add('hidden-fade');
+            
+            // Un-hide the app container so it exists in the DOM
+            app.classList.remove('hidden');
+            app.classList.add('flex');
+            
+            // Wait for fade to finish, then completely remove landing page from the flow
+            setTimeout(() => {
+                landing.style.display = 'none';
+                appendMessage('System', 'Welcome to GafferMesh. Your WDK self-custodial wallet is connected. Enter a prompt to purchase decentralized AI compute.', 'system', false, null);
+            }, 600);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        // --- CLIENT SIDE STATE ---
+        let currentBalance = 150.00;
+        const computeCost = 0.05;
+        let transactions = [];
+
+        function toggleHistory() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.toggle('hidden');
+            renderTransactions();
+        }
+
+        function showToast(title, msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-msg').innerText = msg;
+            
+            let borderColor, iconClass, iconColor;
+            if (type === 'success') { borderColor = 'border-tether-green'; iconClass = 'fa-circle-check'; iconColor = 'text-tether-green'; }
+            else if (type === 'error') { borderColor = 'border-red-500'; iconClass = 'fa-triangle-exclamation'; iconColor = 'text-red-500'; }
+            else { borderColor = 'border-blue-400'; iconClass = 'fa-circle-info'; iconColor = 'text-blue-400'; }
+
+            toast.className = `fixed top-20 right-6 transform transition-transform duration-300 glass-panel border-l-4 p-4 rounded shadow-2xl z-50 flex items-center gap-3 ${borderColor}`;
+            icon.className = `fa-solid ${iconClass} ${iconColor} text-xl`;
+            
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => toast.classList.add('translate-x-full'), 3000);
+        }
+
+        function mockAddMoney() {
+            currentBalance += 10.00;
+            document.getElementById('wallet-balance').innerText = currentBalance.toFixed(2);
+            transactions.unshift({ type: 'CREDIT', amount: '+10.00 USDt', desc: 'Demo Fiat On-ramp', time: new Date().toLocaleTimeString() });
+            showToast('Wallet Funded', 'Successfully added 10.00 USDt to self-custody.');
+        }
+
+        function renderTransactions() {
+            const txList = document.getElementById('tx-list');
+            if (transactions.length === 0) return;
+            
+            txList.innerHTML = transactions.map(tx => `
+                <div class="flex justify-between items-center p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 mb-2">
+                    <div>
+                        <p class="text-sm font-semibold">${tx.desc}</p>
+                        <p class="text-[10px] text-gray-400">${tx.time}</p>
+                    </div>
+                    <span class="font-mono font-bold ${tx.type === 'CREDIT' ? 'text-green-400' : 'text-white'}">${tx.amount}</span>
+                </div>
+            `).join('');
+        }
+
+        async function sendPrompt() {
+            const inputField = document.getElementById('prompt-input');
+            const prompt = inputField.value.trim();
+            if (!prompt) return;
+
+            if (currentBalance < computeCost) {
+                return showToast('Insufficient Funds', 'You need at least 0.05 USDt to request compute.', 'error');
+            }
+            
+            currentBalance -= computeCost;
+            document.getElementById('wallet-balance').innerText = currentBalance.toFixed(2);
+            transactions.unshift({ type: 'DEBIT', amount: '-0.05 USDt', desc: 'QVAC AI Inference', time: new Date().toLocaleTimeString() });
+            
+            inputField.value = '';
+            inputField.style.height = 'auto';
+
+            appendMessage('You', prompt, 'user');
+            const loadingId = appendMessage('GafferMesh Engine', 'Signing WDK transaction and searching for P2P compute...', 'system', true);
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+                
+                if (data.status === "SUCCESS") {
+                    appendMessage('GafferMesh Engine', data.analysis, 'system', false, data.txStatus);
+                } else {
+                    appendMessage('System Error', data.error, 'error');
+                }
+            } catch (err) {
+                document.getElementById(loadingId).remove();
+                appendMessage('System Error', 'Failed to route through local mesh interface.', 'error');
+            }
+        }
+
+        function appendMessage(sender, text, type, isLoading = false, txStatus = null) {
+            const chatBox = document.getElementById('chat-box');
+            const id = 'msg-' + Date.now();
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            let html = '';
+            if (type === 'user') {
+                html = `
+                <div class="flex justify-end w-full chat-bubble">
+                    <div class="max-w-2xl flex flex-col items-end">
+                        <span class="text-[10px] text-gray-500 mb-1 mr-1">${time}</span>
+                        <div class="bg-gray-800 border border-gray-700 text-white rounded-2xl rounded-tr-none px-5 py-3 shadow-md font-medium">
+                            ${text}
+                        </div>
+                    </div>
+                </div>`;
+            } else {
+                const bubbleColor = type === 'error' ? 'border-red-500/50 bg-red-900/20 text-red-200' : 'border-tether-green/30 bg-gray-900/80 text-gray-100 shadow-[0_0_15px_rgba(0,147,147,0.1)]';
+                const icon = type === 'error' ? '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>' : '<i class="fa-solid fa-microchip tether-green"></i>';
+                
+                html = `
+                <div id="${id}" class="flex justify-start w-full chat-bubble">
+                    <div class="max-w-3xl flex flex-col items-start">
+                        <div class="flex items-center gap-2 mb-1 ml-1">
+                            ${icon}
+                            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">${sender}</span>
+                            <span class="text-[10px] text-gray-600">${time}</span>
+                        </div>
+                        <div class="glass-panel border ${bubbleColor} rounded-2xl rounded-tl-none px-6 py-4 shadow-lg leading-relaxed text-sm md:text-base">
+                            ${isLoading ? '<div class="flex items-center gap-2"><i class="fa-solid fa-spinner fa-spin tether-green"></i> Processing...</div>' : text}
+                            ${txStatus ? `<div class="mt-3 pt-3 border-t border-gray-700/50 flex items-center justify-between"><span class="text-xs text-gray-500 font-mono">WDK Settlement Status:</span><span class="text-xs font-bold text-green-400 flex items-center gap-1"><i class="fa-solid fa-check-double"></i> ${txStatus}</span></div>` : ''}
+                        </div>
+                    </div>
+                </div>`;
+            }
+            
+            chatBox.insertAdjacentHTML('beforeend', html);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return id;
+        }
+        
+        document.getElementById('prompt-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendPrompt();
+            }
+        });
+    </script>
+</body>
+</html>
